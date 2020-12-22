@@ -1,7 +1,7 @@
 ---
 title: "Do people watch the news for the news? Or for their confirmation bias?"
 author: "Chien-Che Hung"
-date: "12/22/2020"
+date: "12/23/2020"
 abstract: |
   In this report, we would be discussing the Taiwanese's 
   political behavior with the influence of the Taiwanese 
@@ -196,7 +196,7 @@ have obvious political parties they support, either DPP or KMT. In addition, fro
 interviewers choose to get the latest information from the Internet, whereas 45% of the interviewers would choose to watch 
 television for the latest news. However, under the question of which source of information they trust the most, around 60% of the 
 interviewers choose the television, whereas only 27% of the interviewers choose the Internet. Because of this reason, news outlet 
-television would provide the best explanation on the interviewers' political behaviors to the questions this paper is exploring.
+television would provide the best explanation on the interviewers' political behaviors to the questions this paper is exploring. The comparison is presented in Figure 1. 
 
 ```{r fig.cap= "News source people watch vs News source people trust", echo = FALSE, fig.width = 6, fig.height = 4}
 source <- ggplot(media, aes(x = as.factor(h2))) + 
@@ -215,6 +215,9 @@ trust <- ggplot(media, aes(x = as.factor(h2))) +
   theme(axis.text.x=element_text(angle = 45, hjust = 1))
 grid.arrange(source, trust, ncol = 2)
 ```
+
+\newpage
+
 
 ## Sampling Method
 
@@ -242,7 +245,6 @@ how TCS managed to categorize "other" option into pre-existent options or newly-
 reviewers thought at the moment during the review process. The answers would not be raw enough for the data analysis process. 
 
 
-
 ## Variables and Data Pre-Processing
 
 Because we are trying to understand the relationship between interviewees' television news channel choices and political choices,
@@ -250,13 +252,13 @@ this analysis would include several variables: people's political stances, the n
 watching news, and who they would vote for on the 2016 Presidential Election. Most importantly, we would include interviewees'
 demographic variables because demographics could also contribute to who they will vote for during the 2016 Presidential Election.
 For example, according to an article from Taipei Times, KMT received no support from the age group of 20-24. This shows that the
-importance to include age groups in our analysis. 
+importance to include age groups in our analysis. (Chang, 2020)
 
 For converting the data into usable for our models, some variables required some adjustments. Before manipulating other variables,
 we needed to discard some observations because they did not receive news from television, which was the observations that answered
-zero on the question asking for the days they watch the news on television per day.
+zero on the question asking for the days they watch the news on television per day. The following graph (Figure 2) shows the distribution of the Frequency counts. 
 
-```{r fig.cap= "Frequency Distribution", echo = FALSE, fig.width = 6, fig.height = 4}
+```{r fig.cap= "Frequency Distribution", echo = FALSE, fig.width = 4, fig.height = 3}
 media[is.na(media)] <- 0
 ggplot(media, aes(x = as.factor(k2a))) +
   geom_bar(stat = "count") +
@@ -273,11 +275,11 @@ getting election news?" it allowed more than one choice. To determine whether th
 (Blue Party), DPP (Green Party), or Neutral, we assigned each channel with either -1, 1, or 0 according to the news channel's
 political stances. After setting them, we would add all the interviewees' options and determine the political views on the media
 they watched. For the sums that were larger than 0, we assigned them as "Blue Party" viewers. For the sums that were lower than 0,
-we set them as "Green Party" viewers. For the sums that equaled 0, we put them into the "Neutral" category. Also, there was a
+we set them as "Green Party" viewers. For the sums that equaled 0, we put them into the "Neutral" category. The count for each cateogry is as what Figure 3 shows. Also, there was a
 variable that asked interviewees about their understanding of the channels' political affiliation. However, in this analysis, we
 would not be using it because it blurs the questions that we tried to answer in this paper.
 
-```{r fig.cap= "Media Inclination", echo = FALSE, fig.width = 6, fig.height = 4}
+```{r fig.cap= "Media Inclination", echo = FALSE, fig.width = 4, fig.height = 3}
 ggplot(media_all, aes(x = as.factor(Media_Lean_Obj))) +
   geom_bar(stat = "count") +
   ggtitle("Media Inclination After Data Manipulation") +
@@ -292,32 +294,31 @@ know which candidate to support, the following question asked about which candid
 questions into one to better indicate whom the interviewees were going to support on the election. As we mentioned, this survey also
 asked about which political party the interviewees were leaning towards. Since we were only discussing KMT (Blue Party) and DPP
 (Green Party), the rest of the party would be put into the "Neutral" category to fit the political stances the news channels have
-(Blue, Green, and Neutral).
+(Blue, Green, and Neutral). Figure 4 shows the count distribution for each categories.
 
-```{r fig.cap= "Parties that interviewees support", echo = FALSE, fig.width = 6, fig.height = 4}
+```{r fig.cap= "Parties that interviewees support", echo = FALSE, fig.width = 4, fig.height = 3}
 ggplot(media_all, aes(x = as.factor(Party))) +
   geom_bar(stat = "count") +
   ggtitle("Party Inclination") +
-  xlab("Partyies") +
+  xlab("Parties") +
   ylab("Count") +
   theme_minimal() +
   theme(axis.text.x=element_text(angle = 45, hjust = 1))
 ```
 
+
 After categorizing them into three categories based on their political inclination: "Blue", "Green", and "Neutral," we separated
 them into three datasets according to their political inclination. The reason for us to separate them into three datasets is mainly
 because we can find whom political inclined interviewees and political neutral interviewees would vote for in 2016 election under
-the influence of different political views' news outlets. The graph below shows the basic structure of our analysis and data and the
-table below shows the first few observation for each type of political inclination datasets.
+the influence of different political views' news outlets. The table below shows the first six elements of the Blue Party Dataset.
 
-```{r, echo = FALSE, fig.width = 6, fig.height = 4}
-green <- green %>% select(Candidates, Gender, Age, Marital_Status, Education, Frequency, Media_Lean_Obj)
-kable(head(green), caption = "First six interviewees for Green Sub-Dataset") %>% kable_styling(font_size = 7)
+```{r, echo = FALSE}
 blue <- blue %>% select(Candidates, Gender, Age, Marital_Status, Education, Frequency, Media_Lean_Obj)
-kable(head(blue), caption = "First six interviewees for Green Sub-Dataset") %>% kable_styling(font_size = 7)
-neutral <- neutral %>% select(Candidates, Gender, Age, Marital_Status, Education, Frequency, Media_Lean_Obj)
-kable(head(blue), caption = "First six interviewees for Green Sub-Dataset") %>% kable_styling(font_size = 7)
+kable(head(blue), caption = "First six interviewees for Blue Sub-Dataset") %>% kable_styling(font_size = 7)
 ```
+
+
+\newpage
 
 # Model
 
@@ -445,7 +446,7 @@ variable is 5, which passes the assumption test. The second assumption would be 
 Due to the sampling methods' nature, the sampling methods from the survey collection stage ensure the independence between the
 observations. For multinomial logistic model, we normally have to test an assumption called Independence of Irrelevant Alternative 
 (IIA). This is an assumption "that when people are asked to choose among a set of alternatives, their odds of choosing A over B 
-should not depend on whether some other alternative C is present or absent." (CITEEEEE) However, we would not test it for the 
+should not depend on whether some other alternative C is present or absent." (Paul, 2012) However, we would not test it for the 
 following reasons. Due to the nature of our Candidate variable, it would be impossible for people to not recognize the presence of 
 other candidates during the election. Also, the test created by Hausman and McFadden does not perform well enough in both small 
 samples and large samples. Next, we have to check whether the inclusion of the news outlets' inclinations affects the events' 
@@ -568,7 +569,7 @@ what changes can be made to improve this analysis and apply the result for futur
 ## DPP dataset (Table 5)
 Like what we mentioned in the Model section, the model category is "Tsai Ing-wen from the DPP." Thus, the results are shown in the
 form of log-odds. In order words, the numbers represent how other political stances' media would affect the interviewees to vote for
-those parties' candidates. Also, this sub-dataset contains all the interviewees who support the Green Party. In Table #####, we can
+those parties' candidates. Also, this sub-dataset contains all the interviewees who support the Green Party. In Table 5, we can
 see that people who watch news channels that favor Blue Party are five times more likely to vote for the candidate of the Blue Party
 — Eric Chu after switching from watching news outlets that support the Green Party. Here, you would not see the odds coefficients
 for the Media_Lean_ObjGreen because it is the baseline category. For Neutral Candidate, James Soong from the PFP, the probability
@@ -586,7 +587,7 @@ choose not to vote or do not know who to vote for.
 
 ## KMT dataset (Table 7)
 
-The interpretation would be the same as the DPP dataset. From Table #### above, people who support the Blue Party and watching Green
+The interpretation would be the same as the DPP dataset. From Table 7 above, people who support the Blue Party and watching Green
 Party sided news are four times more likely to vote for Green Party's Candidate — Tsai Ing-wen. Eric Chu from the KMT is not shown
 because it is the base category of this model, which means it is the odds function's denominator. Even for Blue Party's supporters
 who watch the neutral news would have a higher odds (also higher probability) of voting for Tsai Ing-wen. When we look at the odds
@@ -641,20 +642,33 @@ from this analysis.
 
 
 # References
+
+## Data and Literature References
+
+- Joe Bruin. 2006. newtest: command to compute new test.  UCLA:  
+Statistical Consulting Group.  https://stats.idre.ucla.edu/stata/ado/analysis/.
+
+- Chang (2020, July 04). KMT lacks message appealing to young voters. Retrieved December 22, 2020, from https://www.taipeitimes.com/News/editorials/archives/2020/07/05/2003739368
+
+- Ching-Ching Chang (2020). The 2015 Taiwan Communication Survey (Phase One, Year Four): Political and Civic Communication (D00161) [data file]. Available from Survey Research Data Archive, Academia Sinica. doi:10.6141/TW-SRDA-D00161-1
+
+- Paul Allison. (2012, October 8). How Relevant is the Independence of Irrelevant Alternatives? Retrieved December 22, 2020, from https://statisticalhorizons.com/iia
+
+
+
 ## Library References
 
 - Baptiste Auguie (2017). gridExtra: Miscellaneous Functions for "Grid" Graphics. R package
   version 2.3. https://CRAN.R-project.org/package=gridExtra
 
-- Gabry J, Simpson D, Vehtari A, Betancourt M, Gelman A (2019). “Visualization in Bayesian
-  workflow.” _J. R. Stat. Soc. A_, *182*, 389-402. doi: 10.1111/rssa.12378 (URL:
-  https://doi.org/10.1111/rssa.12378).
+- Hao Zhu (2020). kableExtra: Construct Complex Table with 'kable' and Pipe Syntax. R package version 1.2.1.
+  https://CRAN.R-project.org/package=kableExtra
 
-- Hadley Wickham, Jim Hester and Romain Francois (2018). readr: Read Rectangular Text Data. R
-  package version 1.3.1. https://CRAN.R-project.org/package=readr
+- Hadley Wickham, Romain François, Lionel Henry and Kirill Müller (2020). dplyr: A Grammar of Data Manipulation. R
+  package version 1.0.2. https://CRAN.R-project.org/package=dplyr
 
-- Hadley Wickham (2007). Reshaping Data with the reshape Package. Journal of Statistical
-  Software, 21(12), 1-20. URL http://www.jstatsoft.org/v21/i12/.
+- Hadley Wickham and Evan Miller (2020). haven: Import and Export 'SPSS', 'Stata' and 'SAS' Files. R package version
+  2.3.1. https://CRAN.R-project.org/package=haven
 
 - Hadley Wickham (2016). ggplot2: Elegant Graphics for Data Analysi. Springer-Verlag New York
 
@@ -663,27 +677,24 @@ from this analysis.
   rmarkdown: Dynamic Documents for R. R package version 2.3. URL
   https://rmarkdown.rstudio.com.
 
-- Kay M (2020). _tidybayes: Tidy Data and Geoms for Bayesian Models_. doi:
-  10.5281/zenodo.1308151 (URL: https://doi.org/10.5281/zenodo.1308151), R package version 2.1.1,
-  <URL: http://mjskay.github.io/tidybayes/>.
+- Hadley Wickham (2007). Reshaping Data with the reshape Package. Journal of Statistical
+  Software, 21(12), 1-20. URL http://www.jstatsoft.org/v21/i12/.
+  
+- John Fox and Sanford Weisberg (2019). An {R} Companion to Applied Regression, Third Edition. Thousand Oaks CA: Sage.
+  URL: https://socialsciences.mcmaster.ca/jfox/Books/Companion/
 
-- Paul-Christian Bürkner (2017). brms: An R Package for Bayesian Multilevel Models Using Stan.
-  Journal of Statistical Software, 80(1), 1-28. doi:10.18637/jss.v080.i01
-
-- Paul-Christian Bürkner (2018). Advanced Bayesian Multilevel Modeling with the R Package
-  brms. The R Journal, 10(1), 395-411. doi:10.32614/RJ-2018-017
-
-- Paolo Di Lorenzo (2020). usmap: US Maps Including Alaska and Hawaii. R package version
-  0.5.1. https://CRAN.R-project.org/package=usmap
+- Marek Hlavac (2018). stargazer: Well-Formatted Regression and Summary Statistics Tables. R package version 5.2.1.
+  https://CRAN.R-project.org/package=stargazer
 
 - R Core Team (2020). R: A language and environment for statistical computing. R Foundation
   for Statistical Computing, Vienna, Austria. URL https://www.R-project.org/.
-
-- Sing T, Sander O, Beerenwinkel N, Lengauer T (2005). “ROCR: visualizing classifier performance
-  in R.” _Bioinformatics_, *21*(20), 7881. <URL: http://rocr.bioinf.mpi-sb.mpg.de>.
 
 - Wickham et al., (2019). Welcome to the tidyverse. Journal of Open Source Software, 4(43),
   1686, https://doi.org/10.21105/joss.01686
   
 - Yihui Xie (2020). knitr: A General-Purpose Package for Dynamic Report Generation in R. R
   package version 1.29.
+  
+# Appendix
+- The following link is the github repository for this report: https://github.com/frankkhung/final_project
+  
