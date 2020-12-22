@@ -519,9 +519,9 @@ $$
 stargazer(blue_mod,header=FALSE, type='latex', font.size = "scriptsize", column.sep.width = "-10pt")
 ```
 
-The estimated coefficients above are also shown in log-odds form. We can see that coefficients of the news outlets who support Green
+The estimated coefficients in Table 4 are also shown in log-odds form. We can see that coefficients of the news outlets who support Green
 party have an effect on people who support Blue party's choice on voting for the presidential candidate. Also neutral news outlets'
-coefficient is also statistically significant in neutral candidate's model. The table below also shows the exponentiated form of the
+coefficient is also statistically significant in neutral candidate's model. The Table 5 below also shows the exponentiated form of the
 coefficients.
 
 ```{r, echo = FALSE, fig.width = 6, fig.height = 4}
@@ -552,7 +552,7 @@ $$
 stargazer::stargazer(neutral_mod,  header=FALSE, type='latex', font.size = "scriptsize", column.sep.width = "-10pt")
 ```
 
-The table above shows the log-odds results from the model and the table below shows the exponentiated form of the coefficients.
+Table 6 shows the log-odds results from the model and the table 7 shows the exponentiated form of the coefficients.
 
 ```{r, echo = FALSE, fig.width = 6, fig.height = 4}
 # neutral model exp(coeff)
@@ -613,14 +613,14 @@ slightly affect the interviewees' choice.
 ## Neutral Dataset (Table 9)
 
 In this dataset, people selected that they are neutral in their political position. Thus, the model result would show how much and 
-how likely the Taiwanese media would affect its citizens' choice of candidates. In Table XXX, for people who watch news outlets that
+how likely the Taiwanese media would affect its citizens' choice of candidates. In Table 9, for people who watch news outlets that
 favor the Blue Party, the odds of voting for Eric Chu from the KMT would double and only slightly affect other candidates. Also, for
 people who watch news outlets that favor the Green Party, it would increase the odds of voting for Tsai Ing-wen by 70%, whereas
 voting for other candidates would only affect voting. From this result, we can objectively say that there is a relationship between
 how media would affect people's decisions even though they have their political position.
 
 For the demographics, we can see that female interviewees have higher odds of voting for the neutral candidate — James Soong. We can
-see this from checking out the result table. From Table XXX, we can see that the odds for voting for males decrease around 50% for
+see this from checking out the result table. From Table 9, we can see that the odds for voting for males decrease around 50% for
 voting for other candidates or choosing "don't know" or not casting a vote. We can also see that the increase in frequency does not
 affect the odds of voting for any candidates.
 
@@ -649,14 +649,18 @@ from this analysis.
 
 # References
 
-## Data and Literature References
+
+## Data Reference
+
+- Ching-Ching Chang (2020). The 2015 Taiwan Communication Survey (Phase One, Year Four): Political and Civic Communication (D00161) [data file]. Available from Survey Research Data Archive, Academia Sinica. doi:10.6141/TW-SRDA-D00161-1
+
+## Literature References
 
 - Joe Bruin. 2006. newtest: command to compute new test.  UCLA:  
 Statistical Consulting Group.  https://stats.idre.ucla.edu/stata/ado/analysis/.
 
 - Chang (2020, July 04). KMT lacks message appealing to young voters. Retrieved December 22, 2020, from https://www.taipeitimes.com/News/editorials/archives/2020/07/05/2003739368
 
-- Ching-Ching Chang (2020). The 2015 Taiwan Communication Survey (Phase One, Year Four): Political and Civic Communication (D00161) [data file]. Available from Survey Research Data Archive, Academia Sinica. doi:10.6141/TW-SRDA-D00161-1
 
 - Paul Allison. (2012, October 8). How Relevant is the Independence of Irrelevant Alternatives? Retrieved December 22, 2020, from https://statisticalhorizons.com/iia
 
