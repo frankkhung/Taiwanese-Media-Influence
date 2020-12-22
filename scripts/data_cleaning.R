@@ -1,3 +1,13 @@
+#### Preamble ####
+# Purpose: Data Cleaning for the TCS survey
+# Author: Chien-Che Hung
+# Data: 22 October 2020
+# Contact: chienche.hung@mail.utoronto.ca
+# License: MIT
+# Pre-requisites: 
+# - You need to have an account at https://srda.sinica.edu.tw/datasearch_detail.php?id=1291
+# - Register it and download through the link
+
 library(haven)
 library(dplyr)
 data <- read_sav("input/data.sav")
@@ -156,3 +166,5 @@ neutral_party <- media_3[which(media_3$Party =='Neutral'),]
 write.csv(green_party, "input/green_party.csv")
 write.csv(blue_party, "input/blue_party.csv")
 write.csv(neutral_party, "input/neutral.csv")
+write.csv(media, "input/media.csv")
+write.csv(media_3, "input/media_all.csv")

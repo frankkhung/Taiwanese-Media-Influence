@@ -13,9 +13,7 @@ abstract: |
   people watch the news for political information or 
   their confirmation bias. We utilize the data from 
   Taiwan Communication Survey (TCS) to conduct this 
-  analysis. It is a survey aiming to capture the people's 
-  political behaviors on different forms of media. 
-  We decide to focus on news from televisions because 
+  analysis.We decide to focus on news from televisions because 
   the respondents believe that television news is 
   more trustworthy than the internet's information. 
   Due to the reason that the response variable that 
@@ -28,13 +26,7 @@ abstract: |
   candidates and the media behavior. In our analysis, 
   regardless of the party, the respondents initially 
   supported, watching the news from the opposing party
-  would change their support parties. We also find out 
-  that people who support the Blue Party (KMT) are more 
-  likely to alternate their choice based on the new channels 
-  they watch. We also find out that people who acknowledge 
-  themselves as neutral in the political environment are
-  more likely to get influenced by the type of news 
-  outlets they usually watch. Thus, we can conclude 
+  would change their support parties. We can conclude 
   that even though people support their parties outside 
   the elections, watching the news from different 
   television sources could increase their chances 
@@ -117,7 +109,7 @@ blue_mod <- multinom(formula = Candidates ~ Gender + Age + as.numeric(as.factor(
 # get the exponentiated coefficients
 blue_mod_coeff <- as.data.frame(t(exp(coef(blue_mod))))
 
-#coefficient checks
+# lienar hypothesis check
 blue_check_green <- linearHypothesis(blue_mod,
                       c("Tsai Ing-wen from the DPP:Media_Lean_ObjGreen = 0"))
 blue_check_neutral <- linearHypothesis(blue_mod,
@@ -138,7 +130,7 @@ neutral_mod <- multinom(formula = Candidates ~ Gender + Age + as.numeric(as.fact
 # exponentiated coefficients
 neutral_mod_coeff <- as.data.frame(t(exp(coef(neutral_mod))))
 
-# coefficient checks
+# clienar hypothesis checks
 neutral_check_green <- linearHypothesis(neutral_mod,
                       c("Tsai Ing-wen from the DPP:Media_Lean_ObjGreen = 0"))
 
@@ -199,6 +191,7 @@ interviewers choose the television, whereas only 27% of the interviewers choose 
 television would provide the best explanation on the interviewers' political behaviors to the questions this paper is exploring. The comparison is presented in Figure 1. 
 
 ```{r fig.cap= "News source people watch vs News source people trust", echo = FALSE, fig.width = 6, fig.height = 4}
+# graph for the source of media
 source <- ggplot(media, aes(x = as.factor(h2))) + 
   geom_bar(stat = "count", width = 0.7) +
   ggtitle("Latest News -- News Source") +
@@ -206,6 +199,7 @@ source <- ggplot(media, aes(x = as.factor(h2))) +
   ylab("Count") +
   theme_minimal() +
   theme(axis.text.x=element_text(angle = 45, hjust = 1))
+# graph of trust of the news source
 trust <- ggplot(media, aes(x = as.factor(h2))) + 
   geom_bar(stat = "count", width = 0.7) +
   ggtitle("Trust -- News Source") +
@@ -213,6 +207,7 @@ trust <- ggplot(media, aes(x = as.factor(h2))) +
   ylab("Count") +
   theme_minimal() +
   theme(axis.text.x=element_text(angle = 45, hjust = 1))
+# make them side by side graph 
 grid.arrange(source, trust, ncol = 2)
 ```
 
@@ -259,7 +254,9 @@ we needed to discard some observations because they did not receive news from te
 zero on the question asking for the days they watch the news on television per day. The following graph (Figure 2) shows the distribution of the Frequency counts. 
 
 ```{r fig.cap= "Frequency Distribution", echo = FALSE, fig.width = 4, fig.height = 3}
+# assign NA's to 0
 media[is.na(media)] <- 0
+# plot the frequency of watching tv
 ggplot(media, aes(x = as.factor(k2a))) +
   geom_bar(stat = "count") +
   ggtitle("Frequency of Watching Television per Week") +
@@ -267,7 +264,6 @@ ggplot(media, aes(x = as.factor(k2a))) +
   ylab("Count") +
   theme_minimal() +
   theme(axis.text.x=element_text(angle = 45, hjust = 1))
-  
 ```
 
 For the answers to the question "During the 2016 presidential election, which television channel(s) do you watch most frequently for
@@ -280,6 +276,7 @@ variable that asked interviewees about their understanding of the channels' poli
 would not be using it because it blurs the questions that we tried to answer in this paper.
 
 ```{r fig.cap= "Media Inclination", echo = FALSE, fig.width = 4, fig.height = 3}
+# Plot the media inclination 
 ggplot(media_all, aes(x = as.factor(Media_Lean_Obj))) +
   geom_bar(stat = "count") +
   ggtitle("Media Inclination After Data Manipulation") +
@@ -297,6 +294,7 @@ asked about which political party the interviewees were leaning towards. Since w
 (Blue, Green, and Neutral). Figure 4 shows the count distribution for each categories.
 
 ```{r fig.cap= "Parties that interviewees support", echo = FALSE, fig.width = 4, fig.height = 3}
+# plot the party inclination
 ggplot(media_all, aes(x = as.factor(Party))) +
   geom_bar(stat = "count") +
   ggtitle("Party Inclination") +
@@ -313,6 +311,7 @@ because we can find whom political inclined interviewees and political neutral i
 the influence of different political views' news outlets. The table below shows the first six elements of the Blue Party Dataset.
 
 ```{r, echo = FALSE}
+# example table (blue)
 blue <- blue %>% select(Candidates, Gender, Age, Marital_Status, Education, Frequency, Media_Lean_Obj)
 kable(head(blue), caption = "First six interviewees for Blue Sub-Dataset") %>% kable_styling(font_size = 7)
 ```
@@ -482,7 +481,9 @@ log(\frac{\hat{P}(Dont Know)}{\hat{P}(DPP)}) = & \hat{\beta}_{03} + \hat{\beta}_
 log(\frac{\hat{P}(NotVoting)}{\hat{P}(DPP)}) = & \hat{\beta}_{04} + \hat{\beta}_{14}Gender + \hat{\beta}_{24}Age + \hat{\beta}_{34}Marital + \hat{\beta}_{34}Education + \\ &\hat{\beta}_{44}MediaBlue + \hat{\beta}_{54}MediaNeutral \\
 \end{aligned}
 $$
+
 ```{r result table, warning=FALSE, results='asis', echo=FALSE}
+# green model coefficents
 stargazer(green_mod, header=FALSE, type='latex', font.size = "scriptsize", column.sep.width = "-10pt")
 ```
 
@@ -491,6 +492,7 @@ From the above table, the coefficients are shown in log odds form. We can see th
 for the Blue Party Candidate and Neutral Party Candidate are statistically significant. In this case, statistically significant means that the p-value is smaller than 0.1, 0.05, or 0.01. P-values in simple words means that the null hypothesis is true. Here the null hypothesis would be the coefficient equals to zero. The table below shows the exponentiated form of the coefficients. The results can be interpreted the way that we described above.
 
 ```{r, echo = FALSE, fig.width = 6, fig.height = 4}
+# green model exp(coefficients)
 rownames(green_mod_coeff) <- c("Intercept", "GenderMale", "Age", "Marital Status", "Education", "Frequency", "Media_ObjGreen",
                               "Media_ObjNeutral")
 kable(green_mod_coeff, digits = 5, caption = "Exponentiated Coefficients (Odds Form)") %>% kable_styling(font_size = 7)
@@ -513,6 +515,7 @@ log(\frac{\hat{P}(Neutral)}{\hat{P}(KMT)}) = &\hat{\beta}_{02} + \hat{\beta}_{12
 $$
 
 ```{r table, results='asis', echo = FALSE}
+# blue model coefficents
 stargazer(blue_mod,header=FALSE, type='latex', font.size = "scriptsize", column.sep.width = "-10pt")
 ```
 
@@ -522,6 +525,7 @@ coefficient is also statistically significant in neutral candidate's model. The 
 coefficients.
 
 ```{r, echo = FALSE, fig.width = 6, fig.height = 4}
+# blue model exp(coeff)
 rownames(blue_mod_coeff) <- c("Intercept", "GenderMale", "Age", "Marital Status", "Education", "Frequency", "Media_ObjGreen",
                               "Media_ObjNeutral")
 kable(blue_mod_coeff, digits = 5, caption = "Exponentiated Coefficients (Odds Form)") %>% kable_styling(font_size = 7)
@@ -544,12 +548,14 @@ log(\frac{\hat{P}(NotVoting)}{\hat{P}(Neutral)}) = & \hat{\beta}_{04} + \hat{\be
 \end{aligned}
 $$
 ```{r, results='asis', echo = FALSE}
+# neutral model coeff
 stargazer::stargazer(neutral_mod,  header=FALSE, type='latex', font.size = "scriptsize", column.sep.width = "-10pt")
 ```
 
 The table above shows the log-odds results from the model and the table below shows the exponentiated form of the coefficients.
 
 ```{r, echo = FALSE, fig.width = 6, fig.height = 4}
+# neutral model exp(coeff)
 rownames(neutral_mod_coeff) <- c("Intercept", "GenderMale", "Age", "Marital Status", "Education", "Frequency", "Media_ObjGreen",
                               "Media_ObjNeutral")
 kable(neutral_mod_coeff, digits = 5, caption = "Exponentiated Coefficients (Odds Form)") %>% kable_styling(font_size = 7)
