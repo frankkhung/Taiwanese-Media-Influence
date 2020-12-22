@@ -259,7 +259,7 @@ media[is.na(media)] <- 0
 # plot the frequency of watching tv
 ggplot(media, aes(x = as.factor(k2a))) +
   geom_bar(stat = "count") +
-  ggtitle("Frequency of Watching Television per Week") +
+  ggtitle("Frequency of Watching Television") +
   xlab("Days") +
   ylab("Count") +
   theme_minimal() +
