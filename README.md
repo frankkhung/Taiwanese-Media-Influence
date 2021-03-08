@@ -1,4 +1,4 @@
-# Do people watch the news for the news? Or for their confirmationbias?
+# Do people watch the news for the news? Or for their confirmation bias?
 In this analysis, we use Taiwanese Communication Survey (TCS) to analyze the political behavior in Taiwan. The data can be downloaded through the following procedures
 
 ## TCS data
